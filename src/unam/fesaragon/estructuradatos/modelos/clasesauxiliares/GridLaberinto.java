@@ -1,6 +1,6 @@
-package unam.fesaragon.estructuradatos.clasesauxiliares;
+package unam.fesaragon.estructuradatos.modelos.clasesauxiliares;
 
-import unam.fesaragon.estructuradatos.adts.ADTArray2D;
+import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
 
 public class GridLaberinto {
     private ADTArray2D<Coordenada> grid;

@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.adts;
+package unam.fesaragon.estructuradatos.modelos.adts;
 
 public class NodoDoble<T> {
     private T dato;

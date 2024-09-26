@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.adts;
+package unam.fesaragon.estructuradatos.modelos.adts;
 
 public class ListaDoblementeLigada<T> {
     private NodoDoble<T> head;
@@ -90,13 +90,13 @@ public class ListaDoblementeLigada<T> {
             System.out.println("La lista está vacía");
             return null;
         }
-        if (posicion > this.tamanio) {
+        if (posicion > this.tamanio || posicion<0) {
             System.out.println("Posición fuera de rango");
             return null;
         }
 
         NodoDoble<T> aux = this.head;
-        for (int i = 1; i < posicion; i++) {
+        for (int i = 0; i < posicion; i++) {
             aux = aux.getSiguiente();
         }
 
@@ -142,22 +142,22 @@ public class ListaDoblementeLigada<T> {
             System.out.println("La lista está vacía.");
             return;
         }
-        if (posicion > this.tamanio) {
+        if (posicion >= this.tamanio || posicion < 0) {
             System.out.println("Posición fuera de rango");
             return;
         }
 
-        if (posicion == 1) {
+        if (posicion == 0) {
             eliminar_el_primero();
             return;
         }
-        if (posicion == this.tamanio) {
+        if (posicion == this.tamanio - 1) {
             eliminar_el_final();
             return;
         }
 
         NodoDoble<T> aux = this.head;
-        int i = 1;
+        int i = 0;
         while (i < posicion) {
             aux = aux.getSiguiente();
             i++;
@@ -168,6 +168,7 @@ public class ListaDoblementeLigada<T> {
         this.tamanio--;
     }
 
+
     // Buscar un elemento y retornar su posición
     public int buscar(T valor) {
         if (esta_vacia()) {
@@ -176,7 +177,7 @@ public class ListaDoblementeLigada<T> {
         }
 
         NodoDoble<T> aux = this.head;
-        int posicion = 1;
+        int posicion = 0;
         while (aux != null) {
             if (aux.getDato().equals(valor)) {
                 return posicion;

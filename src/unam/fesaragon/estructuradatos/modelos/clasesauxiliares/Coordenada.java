@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.clasesauxiliares;
+package unam.fesaragon.estructuradatos.modelos.clasesauxiliares;
 
 public class Coordenada {
     private int fila;
@@ -35,5 +35,13 @@ public class Coordenada {
 
     public void setColumna(int columna) {
         this.columna = columna;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

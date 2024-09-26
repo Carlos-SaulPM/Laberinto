@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.adts;
+package unam.fesaragon.estructuradatos.modelos.adts;
 
 public class ColaADT<T> {
     private ListaDoblementeLigada<T> data;
@@ -16,7 +16,7 @@ public class ColaADT<T> {
     }
 
     public T frente() {
-        return this.data.obtener(1);
+        return this.data.obtener(0);
     }
 
     public void encolar(T valor) { //enqueue
@@ -25,7 +25,7 @@ public class ColaADT<T> {
 
     public T desEncolar() {
         //Obtener el primer elemento
-        T dato = this.data.obtener(1);
+        T dato = this.data.obtener(0);
         //Despues eliminarlo
         this.data.eliminar_el_primero();
         return dato;
