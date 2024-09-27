@@ -2,8 +2,8 @@ package unam.fesaragon.estructuradatos.modelos;
 
 import unam.fesaragon.estructuradatos.modelos.adts.ADTStack;
 import unam.fesaragon.estructuradatos.modelos.adts.ColaADT;
-import unam.fesaragon.estructuradatos.modelos.clasesauxiliares.Coordenada;
-import unam.fesaragon.estructuradatos.modelos.clasesauxiliares.GridLaberinto;
+import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
+import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 
 public class Laberinto {
     private GridLaberinto gridLaberintoConParedes;

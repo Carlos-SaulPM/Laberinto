@@ -1,0 +1,8 @@
+.grid-pane {
+    -fx-grid-lines-visible: true;
+}
+
+.grid-pane .grid-line {
+    -fx-stroke: green; /* Cambia el color aquí */
+    -fx-stroke-width: 5; /* Cambia el grosor aquí */
+}

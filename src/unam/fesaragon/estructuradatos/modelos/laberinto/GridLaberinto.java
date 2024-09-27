@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.modelos.clasesauxiliares;
+package unam.fesaragon.estructuradatos.modelos.laberinto;
 
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
 

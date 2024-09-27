@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane onMouseClicked="#onClicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #1D2A33;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CeldaController" />

@@ -1,4 +1,4 @@
-package unam.fesaragon.estructuradatos.modelos.clasesauxiliares;
+package unam.fesaragon.estructuradatos.modelos.laberinto;
 
 public class Coordenada {
     private int fila;
