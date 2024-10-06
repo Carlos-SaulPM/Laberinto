@@ -6,19 +6,18 @@ import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 
 public class CeldaController {
     private Coordenada coordenada;
-    public static final String urlFXMLDeCelda = "src/unam/fesaragon/estructuradatos/vistas/celda.fxml";
+    public static final String urlFXMLDeCelda = "/unam/fesaragon/estructuradatos/vistas/celda.fxml";
 
     @FXML
     private Pane panelCelda;
-
-    public CeldaController() {
-    }
 
     @FXML
     private void onClicked(){
         System.out.println("Click");
     }
 
+
+    //GETTERS Y SETTERS
     public Pane getPanelCelda() {
         return panelCelda;
     }
@@ -26,7 +25,6 @@ public class CeldaController {
     public Coordenada getCoordenada() {
         return coordenada;
     }
-
     public void setCoordenada(Coordenada coordenada) {
         this.coordenada = coordenada;
     }

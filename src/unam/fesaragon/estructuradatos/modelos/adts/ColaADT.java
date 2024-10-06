@@ -24,16 +24,22 @@ public class ColaADT<T> {
     }
 
     public T desEncolar() {
-        //Obtener el primer elemento
+        if (this.data.esta_vacia()) {
+            System.out.println("La cola está vacía");
+        }
         T dato = this.data.obtener(0);
-        //Despues eliminarlo
         this.data.eliminar_el_primero();
         return dato;
     }
 
+
     public T siguiente() {
+        if (this.data.get_tamanio() < 2) {
+            System.out.println("No hay un segundo elemento en la cola");
+        }
         return this.data.obtener(1);
     }
+
 
     @Override
     public String toString() {

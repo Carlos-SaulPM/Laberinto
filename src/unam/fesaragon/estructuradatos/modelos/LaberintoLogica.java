@@ -5,11 +5,11 @@ import unam.fesaragon.estructuradatos.modelos.adts.ColaADT;
 import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 
-public class Laberinto {
+public class LaberintoLogica {
     private GridLaberinto gridLaberintoConParedes;
     private ADTStack<Coordenada> camino;
 
-    public Laberinto(GridLaberinto gridLaberintoConParedes) {
+    public LaberintoLogica(GridLaberinto gridLaberintoConParedes) {
         this.gridLaberintoConParedes = gridLaberintoConParedes;
         this.camino = new ADTStack<>();
         this.camino.push(this.gridLaberintoConParedes.getCoordenadaDeEntrada());

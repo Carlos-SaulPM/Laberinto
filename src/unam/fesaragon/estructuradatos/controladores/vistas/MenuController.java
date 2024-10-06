@@ -13,8 +13,8 @@ public class MenuController {
 //    @FXML
 //    public void initialize() {
 //        try {
-//            // Cargar el contenido del archivo Laberinto.fxml
-//            AnchorPane laberintoPane = FXMLLoader.load(getClass().getResource("/ruta/a/tu/Laberinto.fxml"));
+//            // Cargar el contenido del archivo LaberintoLogica.fxml
+//            AnchorPane laberintoPane = FXMLLoader.load(getClass().getResource("/ruta/a/tu/LaberintoLogica.fxml"));
 //
 //            // Reemplazar el AnchorPane en el SplitPane
 //            splitPane.getItems().set(0, laberintoPane);
