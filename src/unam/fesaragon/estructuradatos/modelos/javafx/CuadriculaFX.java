@@ -89,4 +89,8 @@ public class CuadriculaFX {
     public int getColumnas() {
         return columnas;
     }
+
+    public AnchorPane getAnchorPaneContainerCuadricula() {
+        return anchorPaneContainerCuadricula;
+    }
 }

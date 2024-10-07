@@ -5,21 +5,24 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 
 public class MenuController {
+    public static final String urlMenuController = "/unam/fesaragon/estructuradatos/vistas/Menu.fxml";
+    @FXML
+    private AnchorPane aPContenedorMenu;
     @FXML
     private SplitPane splitPane;
     @FXML
     private AnchorPane panelIzquierdo;
 
-//    @FXML
-//    public void initialize() {
-//        try {
-//            // Cargar el contenido del archivo LaberintoLogica.fxml
-//            AnchorPane laberintoPane = FXMLLoader.load(getClass().getResource("/ruta/a/tu/LaberintoLogica.fxml"));
-//
-//            // Reemplazar el AnchorPane en el SplitPane
-//            splitPane.getItems().set(0, laberintoPane);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    public AnchorPane getPanelIzquierdo() {
+        return panelIzquierdo;
+    }
+
+    public SplitPane getSplitPane() {
+        return splitPane;
+    }
+
+    public AnchorPane getaPContenedorMenu() {
+        return aPContenedorMenu;
+    }
 }

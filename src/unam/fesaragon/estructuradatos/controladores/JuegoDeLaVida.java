@@ -1,9 +1,12 @@
 package unam.fesaragon.estructuradatos.controladores;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import unam.fesaragon.estructuradatos.modelos.LaberintoLogica;
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
 
+import unam.fesaragon.estructuradatos.modelos.javafx.Escena;
 import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 import unam.fesaragon.estructuradatos.vistas.componentes.Vista;
@@ -13,9 +16,14 @@ public class JuegoDeLaVida {
     LaberintoLogica laberintoLogica;
 
     public JuegoDeLaVida(int filas, int columnas) throws ArchivoFXML {
-        //this.vista = new Vista(filas, columnas);
+        this.vista = new Vista(filas, columnas);
         GridLaberinto gridLaberinto = probandoLogica(filas, columnas);
         this.laberintoLogica = new LaberintoLogica(gridLaberinto);
+    }
+    public void comenzar(){
+        Escena escena = new Escena("Prueba 1", new Stage());
+        escena.cambiarEscena(vista.getMenuFX().getContenedorMenuController());
+
     }
 
     private GridLaberinto probandoLogica(int filas, int columnas) {
@@ -35,15 +43,9 @@ public class JuegoDeLaVida {
         aux.cargarParedesDeLaberinto(paredes);
         return aux;
     }
-    //Probar Logica e imprimir la pila de camino de laberintoLogica
 
     public LaberintoLogica getLaberintoLogica() {
         return laberintoLogica;
     }
 
-    public static void main(String[] args) throws ArchivoFXML {
-        JuegoDeLaVida juegoDeLaVida = new JuegoDeLaVida(5, 5);
-        juegoDeLaVida.getLaberintoLogica().getCamino().imprimirStack();
-
-    }
 }

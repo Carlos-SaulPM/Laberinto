@@ -6,50 +6,42 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Escena {
-    private String urlFXML;
     private String titulo;
     private String urlImageFXMLTitle;
-    Scene escenaCargada;
-    Stage stagePrincipal;
+    private Scene escenaCargada;
+    private Stage stagePrincipal;
 
     public Escena(Stage stagePrincipal) {
         this.stagePrincipal = stagePrincipal;
     }
 
-    public Escena(String urlFXML, String titulo, Stage stagePrincipal) {
-        this.urlFXML = urlFXML;
+    public Escena(String titulo, Stage stagePrincipal) {
         this.titulo = titulo;
         this.stagePrincipal = stagePrincipal;
-        cargarFXML(urlFXML, titulo);
+        this.stagePrincipal.setTitle(titulo);
     }
 
-    public void cambiarEscena(Scene nuevaEscena){
-        stagePrincipal.setScene(escenaCargada);
+    public void mostrarEscena() {
         stagePrincipal.show();
     }
 
-    public void cargarFXML(String urlFXML, String titulo) {
-
+    public void cambiarEscena(AnchorPane componenteAMostrar) {
         try {
-            FXMLLoader leerFXML = FXMLLoader.load(getClass().getResource(urlFXML));
-            AnchorPane contenedorNuevaEscena = leerFXML.load();
-            escenaCargada = new Scene(contenedorNuevaEscena);
-        }catch (Exception e ){
-            System.out.println("Error al cargar la escena: \n" + e);
+            escenaCargada = new Scene(componenteAMostrar);
+            stagePrincipal.setTitle(titulo);
+            stagePrincipal.setScene(escenaCargada);
+            stagePrincipal.show();
+        } catch (Exception e) {
+            System.out.println(e);;
         }
+
     }
+
 
     public Scene getEscenaCargada() {
         return escenaCargada;
     }
 
-    public String getUrlFXML() {
-        return urlFXML;
-    }
-
-    public void setUrlFXML(String urlFXML) {
-        this.urlFXML = urlFXML;
-    }
 
     public String getTitulo() {
         return titulo;
