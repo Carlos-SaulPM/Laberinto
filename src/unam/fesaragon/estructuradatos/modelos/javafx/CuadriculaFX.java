@@ -70,7 +70,13 @@ public class CuadriculaFX {
         //Cargando la celda
         for (int cantidadDeCeldas = 0; cantidadDeCeldas < (filas * columnas); cantidadDeCeldas++) {
             FXMLLoader loaderCelda = new FXMLLoader(getClass().getResource(CeldaController.urlFXMLDeCelda));
-            celdas.encolar(loaderCelda.getController());
+            try {
+                loaderCelda.load();
+            } catch (IOException e) {
+                throw new ArchivoFXML(e);
+            }
+            CeldaController celdaController = loaderCelda.getController();
+            celdas.encolar(celdaController);
         }
         return celdas;
     }

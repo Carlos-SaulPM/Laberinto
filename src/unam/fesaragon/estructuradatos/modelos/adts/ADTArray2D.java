@@ -1,15 +1,17 @@
 package unam.fesaragon.estructuradatos.modelos.adts;
 
+import java.lang.reflect.Array;
+
 public class ADTArray2D<T> {
     private int filas;
     private int columnas;
     private T array[][];
 
     //  Constructor de la clase
-    public ADTArray2D(int filas, int columnas) {
+    public ADTArray2D(Class<T> clazz, int filas, int columnas) {
         this.filas = filas;
         this.columnas = columnas;
-        this.array = (T[][]) new Object[filas][columnas];
+        this.array = (T[][]) Array.newInstance(clazz, filas, columnas);
     }
     //  Metodo limpiar
     public void clear(T dato) {

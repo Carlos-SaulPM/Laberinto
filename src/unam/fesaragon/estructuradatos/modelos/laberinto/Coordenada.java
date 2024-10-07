@@ -1,5 +1,7 @@
 package unam.fesaragon.estructuradatos.modelos.laberinto;
 
+import java.util.Objects;
+
 public class Coordenada {
     private int fila;
     private int columna;
@@ -43,5 +45,27 @@ public class Coordenada {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordenada[" +
+                "fila=" + fila +
+                ", columna=" + columna +
+                ", estado=" + estado +
+                ']';
+    }
+    @Override
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordenada that = (Coordenada) o;
+        return fila == that.fila && columna == that.columna;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fila, columna);
     }
 }
