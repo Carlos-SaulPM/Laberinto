@@ -13,7 +13,7 @@ public class CeldaController {
 
     @FXML
     private void onClicked(){
-        System.out.println("Click");
+        System.out.println("Click"+ coordenada);
     }
 
 

@@ -9,7 +9,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        JuegoDeLaVida juegoDeLaVida = new JuegoDeLaVida(5,5);
+        JuegoDeLaVida juegoDeLaVida = new JuegoDeLaVida(10,10);
         juegoDeLaVida.comenzar();
     }
 

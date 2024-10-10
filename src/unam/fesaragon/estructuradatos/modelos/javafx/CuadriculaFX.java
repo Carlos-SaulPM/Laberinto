@@ -6,6 +6,7 @@ import unam.fesaragon.estructuradatos.controladores.vistas.CeldaController;
 import unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController;
 import unam.fesaragon.estructuradatos.modelos.adts.ColaADT;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
+import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 
 import java.io.IOException;
 
@@ -36,26 +37,33 @@ public class CuadriculaFX {
         //Configurar el numero de celdas de la cuadriculaController.
         configurarCuadriculaConElTamano();
         llenarCuadriculaDeCeldas();
+        cuadriculaController.getCuadricula().setMaxSize(600.0, 600.0);
+
     }
 
     private void configurarCuadriculaConElTamano() {
         cuadriculaController.getCuadricula().getRowConstraints().clear();
         cuadriculaController.getCuadricula().getColumnConstraints().clear();
-        double rowHeight = 50.0;
-        double columnWidth = 50.0;
+        double rowHeight = 30.0; // Altura de cada fila
+        double columnWidth = 30.0; // Ancho de cada columna
+
         for (int fila = 0; fila < this.getFilas(); fila++) {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setPrefHeight(rowHeight);
+            rowConstraints.setVgrow(Priority.ALWAYS);
             cuadriculaController.getCuadricula().getRowConstraints().add(rowConstraints);
         }
 
         for (int columna = 0; columna < this.getColumnas(); columna++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPrefWidth(columnWidth);
+            columnConstraints.setHgrow(Priority.ALWAYS);
             cuadriculaController.getCuadricula().getColumnConstraints().add(columnConstraints);
         }
-        //System.out.println(columnWidth * this.getColumnas());
-        cuadriculaController.getCuadricula().setPrefSize(columnWidth * this.getColumnas()*0.5, rowHeight * this.getFilas()*0.5);
+
+        // Permitir el crecimiento dinámico del GridPane
+        cuadriculaController.getCuadricula().setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        cuadriculaController.getCuadricula().setPrefSize(columnWidth * this.getColumnas(), rowHeight * this.getFilas());
     }
 
 
@@ -65,17 +73,15 @@ public class CuadriculaFX {
             for (int columna = 0; columna < this.getColumnas(); columna++) {
                 CeldaController celdaController = celdas.desEncolar();
                 Pane panelCelda = celdaController.getPanelCelda();
-
-                // Asegúrate de que el Pane se ajuste al tamaño de la celda
-                panelCelda.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                panelCelda.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 GridPane.setHgrow(panelCelda, Priority.ALWAYS);
                 GridPane.setVgrow(panelCelda, Priority.ALWAYS);
-
+                celdaController.setCoordenada(new Coordenada(fila,columna));
                 cuadriculaController.getCuadricula().add(panelCelda, columna, fila);
             }
         }
-
     }
+
 
     private ColaADT<CeldaController> colaDeCeldas() throws ArchivoFXML {
         ColaADT<CeldaController> celdas = new ColaADT<>();

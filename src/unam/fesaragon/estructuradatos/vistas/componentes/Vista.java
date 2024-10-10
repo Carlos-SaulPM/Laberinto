@@ -21,16 +21,20 @@ public class Vista {
     private void ingresarCuadriculaFXAlMenu() {
         StackPane stackPane = new StackPane();
         stackPane.setStyle("-fx-background-color: #ADD8E6;");
+        stackPane.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        // Añádiendo el GridPane al StackPane
         stackPane.getChildren().add(getCuadriculaFX().getCuadriculaController().getCuadricula());
+        // Centrando el GridPane dentro del StackPane
         StackPane.setAlignment(getCuadriculaFX().getCuadriculaController().getCuadricula(), Pos.CENTER);
-
+        //Envolver el AnchorPane al StackPane
         AnchorPane.setTopAnchor(stackPane, 0.0);
         AnchorPane.setBottomAnchor(stackPane, 0.0);
         AnchorPane.setLeftAnchor(stackPane, 0.0);
         AnchorPane.setRightAnchor(stackPane, 0.0);
-
+        //Remplazar el StackPane
         menuFX.getMenuController().getSplitPane().getItems().set(0, stackPane);
-}
+    }
+
 
     public CuadriculaFX getCuadriculaFX() {
         return cuadriculaFX;
