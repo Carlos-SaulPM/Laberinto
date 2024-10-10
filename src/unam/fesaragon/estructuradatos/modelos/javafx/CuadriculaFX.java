@@ -1,10 +1,7 @@
 package unam.fesaragon.estructuradatos.modelos.javafx;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import unam.fesaragon.estructuradatos.controladores.vistas.CeldaController;
 import unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController;
 import unam.fesaragon.estructuradatos.modelos.adts.ColaADT;
@@ -44,14 +41,23 @@ public class CuadriculaFX {
     private void configurarCuadriculaConElTamano() {
         cuadriculaController.getCuadricula().getRowConstraints().clear();
         cuadriculaController.getCuadricula().getColumnConstraints().clear();
-        for (int filas = 0; filas < this.getFilas(); filas++) {
-            cuadriculaController.getCuadricula().getRowConstraints().add(new RowConstraints());
+        double rowHeight = 50.0;
+        double columnWidth = 50.0;
+        for (int fila = 0; fila < this.getFilas(); fila++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setPrefHeight(rowHeight);
+            cuadriculaController.getCuadricula().getRowConstraints().add(rowConstraints);
         }
-        for (int columnas = 0; columnas < this.getColumnas(); columnas++) {
-            cuadriculaController.getCuadricula().getColumnConstraints().add(new ColumnConstraints());
 
+        for (int columna = 0; columna < this.getColumnas(); columna++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPrefWidth(columnWidth);
+            cuadriculaController.getCuadricula().getColumnConstraints().add(columnConstraints);
         }
+        //System.out.println(columnWidth * this.getColumnas());
+        cuadriculaController.getCuadricula().setPrefSize(columnWidth * this.getColumnas()*0.5, rowHeight * this.getFilas()*0.5);
     }
+
 
     private void llenarCuadriculaDeCeldas() throws ArchivoFXML {
         ColaADT<CeldaController> celdas = colaDeCeldas();
@@ -59,7 +65,13 @@ public class CuadriculaFX {
             for (int columna = 0; columna < this.getColumnas(); columna++) {
                 CeldaController celdaController = celdas.desEncolar();
                 Pane panelCelda = celdaController.getPanelCelda();
-                cuadriculaController.getCuadricula().add(celdaController.getPanelCelda(),columna,fila);
+
+                // Asegúrate de que el Pane se ajuste al tamaño de la celda
+                panelCelda.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                GridPane.setHgrow(panelCelda, Priority.ALWAYS);
+                GridPane.setVgrow(panelCelda, Priority.ALWAYS);
+
+                cuadriculaController.getCuadricula().add(panelCelda, columna, fila);
             }
         }
 
@@ -92,5 +104,9 @@ public class CuadriculaFX {
 
     public AnchorPane getAnchorPaneContainerCuadricula() {
         return anchorPaneContainerCuadricula;
+    }
+
+    public CuadriculaController getCuadriculaController() {
+        return cuadriculaController;
     }
 }

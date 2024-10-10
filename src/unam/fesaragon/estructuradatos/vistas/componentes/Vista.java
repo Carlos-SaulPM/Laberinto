@@ -19,28 +19,17 @@ public class Vista {
     }
 
     private void ingresarCuadriculaFXAlMenu() {
-        //menuFX.getMenuController().getSplitPane().getItems().set(0, getCuadriculaFX().getAnchorPaneContainerCuadricula());
         StackPane stackPane = new StackPane();
-        AnchorPane anchorPane = getCuadriculaFX().getAnchorPaneContainerCuadricula();
+        stackPane.setStyle("-fx-background-color: #ADD8E6;");
+        stackPane.getChildren().add(getCuadriculaFX().getCuadriculaController().getCuadricula());
+        StackPane.setAlignment(getCuadriculaFX().getCuadriculaController().getCuadricula(), Pos.CENTER);
 
-        // Ajustar las propiedades de anclaje para centrar el AnchorPane
-        AnchorPane.setTopAnchor(anchorPane, 0.0);
-        AnchorPane.setBottomAnchor(anchorPane, 0.0);
-        AnchorPane.setLeftAnchor(anchorPane, 0.0);
-        AnchorPane.setRightAnchor(anchorPane, 0.0);
+        AnchorPane.setTopAnchor(stackPane, 0.0);
+        AnchorPane.setBottomAnchor(stackPane, 0.0);
+        AnchorPane.setLeftAnchor(stackPane, 0.0);
+        AnchorPane.setRightAnchor(stackPane, 0.0);
 
-        // Centrar el AnchorPane dentro del StackPane
-        StackPane.setAlignment(anchorPane, Pos.CENTER);  // Asegura que esté centrado
-
-        stackPane.getChildren().add(anchorPane);
-        stackPane.setStyle("-fx-background-color: lightblue;");
-
-        // Insertar el StackPane en el SplitPane
         menuFX.getMenuController().getSplitPane().getItems().set(0, stackPane);
-
-        // Ajustar el tamaño del StackPane para que ocupe todo el espacio
-        stackPane.prefWidthProperty().bind(menuFX.getMenuController().getSplitPane().widthProperty());
-        stackPane.prefHeightProperty().bind(menuFX.getMenuController().getSplitPane().heightProperty());
 }
 
     public CuadriculaFX getCuadriculaFX() {

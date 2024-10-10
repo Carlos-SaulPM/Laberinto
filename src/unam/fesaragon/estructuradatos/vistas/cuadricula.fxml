@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPaneContenedorGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController">
-   <children>
-      <GridPane fx:id="cuadricula" maxHeight="100.0" maxWidth="100.0" minHeight="10.0" minWidth="10.0" prefHeight="100.0" prefWidth="100.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-   </children>
+<AnchorPane fx:id="anchorPaneContenedorGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: black;"
+            xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController">
+    <children>
+        <GridPane fx:id="cuadricula" stylesheets="@styles.css">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" minHeight="10.0"/>
+                <RowConstraints vgrow="ALWAYS" minHeight="10.0"/>
+            </rowConstraints>
+            <styleClass>
+                <String fx:value="grid-pane"/>
+                <String fx:value="grid-line"/>
+            </styleClass>
+        </GridPane>
+    </children>
 </AnchorPane>
+
