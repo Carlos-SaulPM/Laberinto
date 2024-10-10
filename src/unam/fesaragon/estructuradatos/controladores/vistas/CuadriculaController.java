@@ -7,16 +7,12 @@ import javafx.scene.layout.GridPane;
 public class CuadriculaController {
     public static final String urlFXMLDeCuadricula = "/unam/fesaragon/estructuradatos/vistas/cuadricula.fxml";
     @FXML
-    private GridPane cuadricula;
+    private GridPane gridPaneCuadricula;
 
-    @FXML
-    private AnchorPane anchorPaneContenedorGridPane;
 
-    public GridPane getCuadricula() {
-        return cuadricula;
+    public GridPane getGridPaneCuadricula() {
+        return gridPaneCuadricula;
     }
 
-    public AnchorPane getAnchorPaneContenedorGridPane() {
-        return anchorPaneContenedorGridPane;
-    }
+
 }

@@ -14,6 +14,7 @@ public class CuadriculaFX {
     //Componentes de la cuadricula
     private AnchorPane anchorPaneContainerCuadricula;
     private CuadriculaController cuadriculaController;
+    private boolean habilitarTouchDeceldas = false;
 
     //Atributos de la cuadricula
     private int filas;
@@ -22,6 +23,12 @@ public class CuadriculaFX {
     public CuadriculaFX(int filas, int columnas) throws ArchivoFXML {
         this.filas = filas;
         this.columnas = columnas;
+        cargarComponentes();
+    }
+    public CuadriculaFX(int filas, int columnas, boolean habilitarTouchDeCeldas) throws ArchivoFXML {
+        this.filas = filas;
+        this.columnas = columnas;
+        this.habilitarTouchDeceldas = habilitarTouchDeCeldas;
         cargarComponentes();
     }
 
@@ -37,13 +44,13 @@ public class CuadriculaFX {
         //Configurar el numero de celdas de la cuadriculaController.
         configurarCuadriculaConElTamano();
         llenarCuadriculaDeCeldas();
-        cuadriculaController.getCuadricula().setMaxSize(600.0, 600.0);
+        cuadriculaController.getGridPaneCuadricula().setMaxSize(600.0, 600.0);
 
     }
 
     private void configurarCuadriculaConElTamano() {
-        cuadriculaController.getCuadricula().getRowConstraints().clear();
-        cuadriculaController.getCuadricula().getColumnConstraints().clear();
+        cuadriculaController.getGridPaneCuadricula().getRowConstraints().clear();
+        cuadriculaController.getGridPaneCuadricula().getColumnConstraints().clear();
         double rowHeight = 30.0; // Altura de cada fila
         double columnWidth = 30.0; // Ancho de cada columna
 
@@ -51,19 +58,19 @@ public class CuadriculaFX {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setPrefHeight(rowHeight);
             rowConstraints.setVgrow(Priority.ALWAYS);
-            cuadriculaController.getCuadricula().getRowConstraints().add(rowConstraints);
+            cuadriculaController.getGridPaneCuadricula().getRowConstraints().add(rowConstraints);
         }
 
         for (int columna = 0; columna < this.getColumnas(); columna++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPrefWidth(columnWidth);
             columnConstraints.setHgrow(Priority.ALWAYS);
-            cuadriculaController.getCuadricula().getColumnConstraints().add(columnConstraints);
+            cuadriculaController.getGridPaneCuadricula().getColumnConstraints().add(columnConstraints);
         }
 
         // Permitir el crecimiento dinámico del GridPane
-        cuadriculaController.getCuadricula().setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        cuadriculaController.getCuadricula().setPrefSize(columnWidth * this.getColumnas(), rowHeight * this.getFilas());
+        cuadriculaController.getGridPaneCuadricula().setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        cuadriculaController.getGridPaneCuadricula().setPrefSize(columnWidth * this.getColumnas(), rowHeight * this.getFilas());
     }
 
 
@@ -77,7 +84,7 @@ public class CuadriculaFX {
                 GridPane.setHgrow(panelCelda, Priority.ALWAYS);
                 GridPane.setVgrow(panelCelda, Priority.ALWAYS);
                 celdaController.setCoordenada(new Coordenada(fila,columna));
-                cuadriculaController.getCuadricula().add(panelCelda, columna, fila);
+                cuadriculaController.getGridPaneCuadricula().add(panelCelda, columna, fila);
             }
         }
     }
@@ -94,6 +101,7 @@ public class CuadriculaFX {
                 throw new ArchivoFXML(e);
             }
             CeldaController celdaController = loaderCelda.getController();
+            if (!habilitarTouchDeceldas) celdaController.setCambiarEstadoDeLasCeldas_Click(false);
             celdas.encolar(celdaController);
         }
         return celdas;

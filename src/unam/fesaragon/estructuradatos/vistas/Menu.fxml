@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -13,12 +14,12 @@
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.8248175182481752" prefHeight="1080.0" prefWidth="1920.0">
         <items>
-          <AnchorPane fx:id="panelIzquierdo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1680.0" />
+            <StackPane />
           <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="240.0" SplitPane.resizableWithParent="false">
                <children>
                   <VBox alignment="CENTER" maxWidth="240.0" prefWidth="240.0" spacing="20.0" translateY="100.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Laberinto" textAlignment="CENTER" textOrigin="CENTER">
+                        <Text fx:id="textTitulo1" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Laberinto" textAlignment="CENTER" textOrigin="CENTER">
                            <font>
                               <Font name="Verdana Bold" size="20.0" />
                            </font>
@@ -35,7 +36,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cargar laberinto" textAlignment="CENTER" textOrigin="CENTER">
+                        <Text fx:id="textTitulo2" strokeType="OUTSIDE" strokeWidth="0.0" text="Cargar laberinto" textAlignment="CENTER" textOrigin="CENTER">
                            <font>
                               <Font name="Verdana Bold" size="20.0" />
                            </font>

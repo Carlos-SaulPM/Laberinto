@@ -32,7 +32,7 @@ public class Escena {
             stagePrincipal.setScene(escenaCargada);
             stagePrincipal.show();
         } catch (Exception e) {
-            System.out.println(e);;
+            System.out.println(e);
         }
 
     }

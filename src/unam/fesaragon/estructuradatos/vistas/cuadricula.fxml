@@ -11,7 +11,7 @@
             xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController">
     <children>
-        <GridPane fx:id="cuadricula" minHeight="400.0" minWidth="400.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+        <GridPane fx:id="gridPaneCuadricula" minHeight="400.0" minWidth="400.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" stylesheets="@styles.css">
             <columnConstraints>
                 <ColumnConstraints minWidth="10.0" maxWidth="50.0" hgrow="ALWAYS"/>
