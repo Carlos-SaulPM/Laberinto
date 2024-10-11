@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class MenuFX {
     //Elementos del menuFX
-    private MenuController menuController;
     private AnchorPane contenedorMenuController;
+    private MenuController menuController;
     //Elementos de la cuadriculaFX
     private CuadriculaFX cuadriculaFX;
     //Elementos de menuParaCargarCuadricula
+    StackPane stackPaneDeCuadriculaFX;
 
 
     public MenuFX(int filas, int columnas) throws ArchivoFXML {
@@ -39,21 +40,22 @@ public class MenuFX {
     }
 
     private void ingresarCuadriculaFXAlMenu() {
-        StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: #ADD8E6;");
-        stackPane.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        stackPaneDeCuadriculaFX = new StackPane();
+        stackPaneDeCuadriculaFX.setStyle("-fx-background-color: #ADD8E6;");
+        stackPaneDeCuadriculaFX.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // Añádiendo el GridPane al StackPane
-        stackPane.getChildren().add(cuadriculaFX.getCuadriculaController().getGridPaneCuadricula());
+        stackPaneDeCuadriculaFX.getChildren().add(cuadriculaFX.getCuadriculaController().getGridPaneCuadricula());
         // Centrando el GridPane dentro del StackPane
         StackPane.setAlignment(cuadriculaFX.getCuadriculaController().getGridPaneCuadricula(), Pos.CENTER);
         //Envolver el AnchorPane al StackPane
-        AnchorPane.setTopAnchor(stackPane, 0.0);
-        AnchorPane.setBottomAnchor(stackPane, 0.0);
-        AnchorPane.setLeftAnchor(stackPane, 0.0);
-        AnchorPane.setRightAnchor(stackPane, 0.0);
+        AnchorPane.setTopAnchor(stackPaneDeCuadriculaFX, 0.0);
+        AnchorPane.setBottomAnchor(stackPaneDeCuadriculaFX, 0.0);
+        AnchorPane.setLeftAnchor(stackPaneDeCuadriculaFX, 0.0);
+        AnchorPane.setRightAnchor(stackPaneDeCuadriculaFX, 0.0);
         //Remplazar el StackPane
-        this.getMenuController().getSplitPane().getItems().set(0, stackPane);
+        this.getMenuController().getSplitPane().getItems().set(0, stackPaneDeCuadriculaFX);
     }
+
 
     private void cargarComponentes() throws ArchivoFXML {
         FXMLLoader loaderCuadricula = new FXMLLoader(getClass().getResource(MenuController.urlMenuController));
@@ -81,5 +83,9 @@ public class MenuFX {
 
     public void setCuadriculaFX(CuadriculaFX cuadriculaFX) {
         this.cuadriculaFX = cuadriculaFX;
+    }
+
+    public StackPane getStackPaneDeCuadriculaFX() {
+        return stackPaneDeCuadriculaFX;
     }
 }

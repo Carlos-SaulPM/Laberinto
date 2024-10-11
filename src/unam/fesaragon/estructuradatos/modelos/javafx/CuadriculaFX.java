@@ -10,9 +10,8 @@ import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 
 import java.io.IOException;
 
-public class CuadriculaFX {
+public class CuadriculaFX{
     //Componentes de la cuadricula
-    private AnchorPane anchorPaneContainerCuadricula;
     private CuadriculaController cuadriculaController;
     private boolean habilitarTouchDeceldas = false;
 
@@ -36,7 +35,7 @@ public class CuadriculaFX {
         FXMLLoader loaderCuadricula = new FXMLLoader(getClass().getResource(CuadriculaController.urlFXMLDeCuadricula));
         //Cargando la cuadricula
         try {
-            anchorPaneContainerCuadricula = loaderCuadricula.load();
+            loaderCuadricula.load();
         } catch (IOException e) {
             throw new ArchivoFXML(e);
         }
@@ -73,7 +72,6 @@ public class CuadriculaFX {
         cuadriculaController.getGridPaneCuadricula().setPrefSize(columnWidth * this.getColumnas(), rowHeight * this.getFilas());
     }
 
-
     private void llenarCuadriculaDeCeldas() throws ArchivoFXML {
         ColaADT<CeldaController> celdas = colaDeCeldas();
         for (int fila = 0; fila < this.getFilas(); fila++) {
@@ -88,7 +86,6 @@ public class CuadriculaFX {
             }
         }
     }
-
 
     private ColaADT<CeldaController> colaDeCeldas() throws ArchivoFXML {
         ColaADT<CeldaController> celdas = new ColaADT<>();
@@ -107,6 +104,33 @@ public class CuadriculaFX {
         return celdas;
     }
 
+//    public CuadriculaFX copiarCuadricula() throws ArchivoFXML {
+//        CuadriculaFX copiaCuadricula = new CuadriculaFX(this.getFilas(), this.getColumnas(), this.habilitarTouchDeceldas);
+//
+//        // Iterar sobre cada celda de la cuadricula original
+//        for (int fila = 0; fila < this.getFilas(); fila++) {
+//            for (int columna = 0; columna < this.getColumnas(); columna++) {
+//                // Obtener la celda original y su coordenada
+//                CeldaController celdaOriginal = this.getCuadriculaController().getCelda(fila, columna);
+//                Coordenada coordenadaOriginal = celdaOriginal.getCoordenada();
+//
+//                // Crear una nueva celda para la copia
+//                CeldaController celdaCopia = copiaCuadricula.getCuadriculaController().getCelda(fila, columna);
+//
+//                // Copiar el estado de la coordenada
+//                Coordenada coordenadaCopia = new Coordenada(coordenadaOriginal.getFila(), coordenadaOriginal.getColumna());
+//                coordenadaCopia.setEstado(coordenadaOriginal.getEstado());
+//
+//                // Asignar la coordenada copiada a la nueva celda
+//                celdaCopia.setCoordenada(coordenadaCopia);
+//
+//                // Copiar otras propiedades de la celda si es necesario (como color, etc.)
+//            }
+//        }
+//
+//        return copiaCuadricula;
+//    }
+
     //GETTERS Y SETTERS
     public int getFilas() {
         return filas;
@@ -116,11 +140,10 @@ public class CuadriculaFX {
         return columnas;
     }
 
-    public AnchorPane getAnchorPaneContainerCuadricula() {
-        return anchorPaneContainerCuadricula;
-    }
-
     public CuadriculaController getCuadriculaController() {
         return cuadriculaController;
     }
+
+
+
 }

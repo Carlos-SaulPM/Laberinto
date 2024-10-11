@@ -6,6 +6,7 @@ import unam.fesaragon.estructuradatos.modelos.LaberintoLogica;
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
 
+import unam.fesaragon.estructuradatos.modelos.javafx.CuadriculaFX;
 import unam.fesaragon.estructuradatos.modelos.javafx.Escena;
 import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
@@ -47,14 +48,15 @@ public class JuegoDeLaVida {
     }
 
     private void cargarLaberinto() {
-        System.out.println("Antes de cambiar cuadriculas FX");
-        System.out.println("Menu de inicio: "+vista.getMenuDeInicio().getCuadriculaFX().hashCode());
-        System.out.println("Menu cargar laberinto: "+vista.getMenuParaCargarElLaberinto().getCuadriculaFX().hashCode());
-        vista.getMenuDeInicio().setCuadriculaFX(vista.getMenuParaCargarElLaberinto().getCuadriculaFX());
-        System.out.println("Despues de cambiar cuadriculas FX");
-        System.out.println("Menu de inicio: "+vista.getMenuDeInicio().getCuadriculaFX().hashCode());
-        System.out.println("Menu cargar laberinto: "+vista.getMenuParaCargarElLaberinto().getCuadriculaFX().hashCode());
+        CuadriculaFX copia = vista.getMenuParaCargarElLaberinto().getCuadriculaFX();
+        vista.getMenuDeInicio().setCuadriculaFX(copia);
+
+        // Actualizar visualmente el contenedor
+        vista.getMenuDeInicio().getStackPaneDeCuadriculaFX().getChildren().clear();
+        vista.getMenuDeInicio().getStackPaneDeCuadriculaFX().getChildren().add(copia.getCuadriculaController().getGridPaneCuadricula());
+        vista.getMenuDeInicio().getContenedorMenuController().requestLayout();
     }
+
 
     private void cambiarMenu() {
         vista.getMenuDeInicio().getContenedorMenuController().getChildren().clear();
