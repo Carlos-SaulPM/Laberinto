@@ -21,10 +21,6 @@ public class Escena {
         this.stagePrincipal.setTitle(titulo);
     }
 
-    public void mostrarEscena() {
-        stagePrincipal.show();
-    }
-
     public void cambiarEscena(AnchorPane componenteAMostrar) {
         try {
             escenaCargada = new Scene(componenteAMostrar);
