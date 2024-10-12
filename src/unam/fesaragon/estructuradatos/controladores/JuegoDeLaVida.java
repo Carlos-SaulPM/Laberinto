@@ -28,7 +28,7 @@ public class JuegoDeLaVida {
     }
 
     public void comenzar() {
-        escena = new Escena("Prueba 1", new Stage());
+        escena = new Escena("El juego de la vida", new Stage());
         escena.cambiarEscena(vista.getMenuDeInicio().getContenedorMenuController());
         configurarBotonesDeLosMenus();
     }
@@ -49,9 +49,7 @@ public class JuegoDeLaVida {
     }
 
     private void iniciarLaberinto() {
-        System.out.println("Hash code desde Menu de inicio: ");
-        System.out.println("Menu de inicio: "+vista.getMenuDeInicio().getCuadriculaFX().hashCode());
-        System.out.println("Menu cargar laberinto: "+vista.getMenuParaCargarElLaberinto().getCuadriculaFX().hashCode());
+
     }
 
     private void cargarLaberinto() throws ArchivoFXML {
@@ -76,7 +74,6 @@ public class JuegoDeLaVida {
             menuIniciarLaberinto = true;
         }
     }
-
 
     private GridLaberinto probandoLogica(int filas, int columnas) {
         GridLaberinto aux = new GridLaberinto(filas, columnas);

@@ -3,6 +3,4 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane fx:id="panelCelda" onMouseClicked="#onClicked" style="-fx-background-color: #cfcfcf;"
-      xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CeldaController"/>
+<Pane fx:id="panelCelda" onMouseClicked="#onClicked" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unam.fesaragon.estructuradatos.controladores.vistas.CeldaController" />
