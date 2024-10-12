@@ -6,12 +6,15 @@ import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 public class LaberintoLogica {
     private GridLaberinto gridLaberintoConParedes;
     private ADTStack<Coordenada> camino;
     private Set<Coordenada> visitadas;
+    private Queue<Coordenada> movimientos;
 
     //gridLaberintoConParedes debe estar previamente configurada:
     //Coordenada de entrada y salida
@@ -21,6 +24,7 @@ public class LaberintoLogica {
         this.gridLaberintoConParedes = gridLaberintoConParedes;
         this.camino = new ADTStack<>();
         this.visitadas = new HashSet<>();
+        this.movimientos = new LinkedList<>();
         Coordenada entrada = this.gridLaberintoConParedes.getCoordenadaDeEntrada();
         this.camino.push(entrada);
         this.visitadas.add(entrada);
@@ -32,51 +36,50 @@ public class LaberintoLogica {
         while (!camino.peek().equals(gridLaberintoConParedes.getCoordenadaDeSalida())) {
             moverseASiguienteCoordenada(this.camino.peek());
         }
-
     }
 
     // Avanzar a la siguiente coordenada
     private void moverseASiguienteCoordenada(Coordenada coordenadaACalcularLaSiguiente) {
         Coordenada coordenadaSiguiente = siguienteCoordenada(coordenadaACalcularLaSiguiente);
         if (coordenadaSiguiente == null) {
-            // Regresar si no hay coordenada válida
+            // Si no hay salida, marco el retroceso como false
             camino.peek().setEstado(false);
+            movimientos.add(camino.peek());
             camino.pop();
         } else {
+            coordenadaSiguiente.setEstado(true);
             this.camino.push(coordenadaSiguiente);
             this.visitadas.add(coordenadaSiguiente);
+            this.movimientos.add(coordenadaSiguiente);
         }
     }
 
-
     private Coordenada siguienteCoordenada(Coordenada coordenadaDeEntrada) {
         ColaADT<Coordenada> coordenadasMovimiento = new ColaADT<>();
-        // Agregar las posibles coordenadas vecinas en el orden izquierda, arriba, derecha, abajo
+        // Agregando las posibles coordenadas vecinas en el orden izquierda, arriba, derecha, abajo
         coordenadasMovimiento.encolar(new Coordenada(coordenadaDeEntrada.getFila(), coordenadaDeEntrada.getColumna() - 1));  // Izquierda
         coordenadasMovimiento.encolar(new Coordenada(coordenadaDeEntrada.getFila() - 1, coordenadaDeEntrada.getColumna()));  // Arriba
         coordenadasMovimiento.encolar(new Coordenada(coordenadaDeEntrada.getFila(), coordenadaDeEntrada.getColumna() + 1));  // Derecha
         coordenadasMovimiento.encolar(new Coordenada(coordenadaDeEntrada.getFila() + 1, coordenadaDeEntrada.getColumna()));  // Abajo
 
-        // Buscar una coordenada válida
+        // Buscando una coordenada válida
         while (!coordenadasMovimiento.estaVacia()) {
             Coordenada candidata = coordenadasMovimiento.frente();
             boolean coordenadaDentroDeLosLimites = coordenadaDentroDeLosLimites(candidata);
 
-
-            // Verificar que la coordenada no haya sido visitada antes y sea válida
+            // Verificando que la coordenada no haya sido visitada antes y sea válida
             if (coordenadaDentroDeLosLimites) {
                 boolean yaHaRecorridoEsaCelda = visitadas.contains(gridLaberintoConParedes.getCoordenada(candidata.getFila(), candidata.getColumna()));
-                boolean noEsUnaParedEsaCoordenada =gridLaberintoConParedes.getCoordenada(candidata.getFila(), candidata.getColumna()).isEstado();
-                if (!yaHaRecorridoEsaCelda && noEsUnaParedEsaCoordenada){
+                boolean noEsUnaParedEsaCoordenada = gridLaberintoConParedes.getCoordenada(candidata.getFila(), candidata.getColumna()).isEstado();
+                if (!yaHaRecorridoEsaCelda && noEsUnaParedEsaCoordenada) {
                     return candidata;
                 }
 
             }
-            coordenadasMovimiento.desEncolar();  // Descartar la coordenada no válida
+            coordenadasMovimiento.desEncolar();  // Descartando la coordenada no válida
         }
-        return null;  // No se encontró una coordenada válida
+        return null;  // No se encontro una coordenada valida
     }
-
 
     private boolean coordenadaDentroDeLosLimites(Coordenada coordenadaAEvaluar) {
         boolean dentroDeLimitesDeColumnas = coordenadaAEvaluar.getColumna() >= gridLaberintoConParedes.getEsquinaSuperiorIzquierda().getColumna() && coordenadaAEvaluar.getColumna() <= gridLaberintoConParedes.getEsquinaInferiorDerecha().getColumna();
@@ -87,4 +90,9 @@ public class LaberintoLogica {
     public ADTStack<Coordenada> getCamino() {
         return camino;
     }
+
+    public Queue<Coordenada> getMovimientos() {
+        return movimientos;
+    }
+
 }

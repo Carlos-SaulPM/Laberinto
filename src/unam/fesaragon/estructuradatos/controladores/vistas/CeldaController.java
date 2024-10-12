@@ -18,7 +18,6 @@ public class CeldaController {
         if (!cambiarEstadoDeLasCeldas_Click) return;
         getCoordenada().setEstado(!getCoordenada().isEstado());
         cambiarColor();
-        System.out.println("Click" + coordenada);
     }
 
     private void cambiarColor() {
