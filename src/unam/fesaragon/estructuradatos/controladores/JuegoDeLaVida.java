@@ -26,14 +26,19 @@ public class JuegoDeLaVida {
     private LaberintoLogica laberintoLogica;
     private SplitPane splitPaneMenuInicio;
     private SplitPane splitPaneParaCargarLaberinto;
-    private Coordenada coordenadaDeSalida = new Coordenada(9, 9);
-    private Coordenada coordenadaDeEntrada = new Coordenada(0, 0);
+    private Coordenada coordenadaDeSalida;
+    private Coordenada coordenadaDeEntrada;
     private boolean menuIniciarLaberinto = true;
     private boolean seEstaPintando = false;
+    private boolean yaSePintoUnaVez = false;
     private double seguntosParaPintarCadaCelda = 0.1;
 
     public JuegoDeLaVida(int filas, int columnas) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
+    }
+    public JuegoDeLaVida(int filas, int columnas, double seguntosParaPintarCadaCelda) throws ArchivoFXML {
+        this.vista = new Vista(filas, columnas);
+        this.seguntosParaPintarCadaCelda = seguntosParaPintarCadaCelda;
     }
 
     public void comenzar() {
@@ -58,6 +63,17 @@ public class JuegoDeLaVida {
     }
 
     private void iniciarLaberinto() {
+        //Validaciones
+        if (seEstaPintando) {
+            JOptionPane.showMessageDialog(null, "Se esta pintando el laberinto", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (coordenadaDeEntrada == null) {
+            JOptionPane.showMessageDialog(null, "No haz cargado el laberinto", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         CuadriculaFX cuadriculaFX = vista.getMenuDeInicio().getCuadriculaFX();
         int filas = cuadriculaFX.getFilas();
         int columnas = cuadriculaFX.getColumnas();
@@ -67,13 +83,21 @@ public class JuegoDeLaVida {
         //Obtener el GridLaberinto para pasarlo a la logica.
         for (int fila = 0; fila < filas; fila++) {
             for (int columna = 0; columna < columnas; columna++) {
-                //Negando la condicion Obtengo solo las paredes
                 paredes.set_item(fila, columna, cuadriculaFX.getCuadriculaController().getCelda(fila, columna).getCoordenada());
 
             }
         }
         aux.cargarParedesDeLaberinto(paredes);
         this.laberintoLogica = new LaberintoLogica(aux);
+        if (yaSePintoUnaVez){
+            for (int fila = 0; fila < filas; fila++) {
+                for (int columna = 0; columna < columnas; columna++) {
+                    if (cuadriculaFX.getCuadriculaController().getCelda(fila,columna).getCoordenada().isEstado()){
+                    cuadriculaFX.getCuadriculaController().getCelda(fila,columna).getPanelCelda().setStyle("-fx-background-color: #FFF;");
+                    }
+                }
+            }
+        }
         pintarCamino();
     }
 
@@ -87,9 +111,10 @@ public class JuegoDeLaVida {
                 CeldaController celda = vista.getMenuDeInicio().getCuadriculaFX().getCuadriculaController().getCelda(coordenadaMovimiento.getFila(), coordenadaMovimiento.getColumna());
                 if (coordenadaMovimiento.isEstado()) {
                     celda.getPanelCelda().setStyle("-fx-background-color: #6CB254FF;"); // Verde para avanzar
-                    if (movimientos.isEmpty()){
+                    if (movimientos.isEmpty()) {
                         vista.getMenuDeInicio().getCuadriculaFX().getCuadriculaController().getCelda(coordenadaDeSalida.getFila(), coordenadaDeSalida.getColumna()).getPanelCelda().setStyle("-fx-background-color: #5486b2;");
-
+                        seEstaPintando = false;
+                        yaSePintoUnaVez = true;
                     }
                 }
                 // Si el movimiento es retroceder (estado es false), se pinta de rojo
@@ -100,31 +125,21 @@ public class JuegoDeLaVida {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        seEstaPintando = false;
-    }
-
-    private Stack<Coordenada> invertirStack(ADTStack<Coordenada> original) {
-        Stack<Coordenada> invertido = new Stack<>();
-        while (!original.isEmpty()) {
-            invertido.push(original.pop());
-        }
-        return invertido;
     }
 
     private void cargarLaberinto() throws ArchivoFXML {
-        if (seEstaPintando) return;
         CuadriculaFX copia = clonarCuadricula(vista.getMenuParaCargarElLaberinto().getCuadriculaFX());
         vista.getMenuDeInicio().setCuadriculaFX(copia);
         // Actualizar visualmente el contenedor
         vista.getMenuDeInicio().getStackPaneDeCuadriculaFX().getChildren().clear();
         vista.getMenuDeInicio().getStackPaneDeCuadriculaFX().getChildren().add(copia.getCuadriculaController().getGridPaneCuadricula());
         vista.getMenuDeInicio().getContenedorMenuController().requestLayout();
-        coordenadaDeEntrada = cuadroParaIngresarCoordenada("La coordenada de entrada:", "Entrada de Datos", JOptionPane.QUESTION_MESSAGE);
-        coordenadaDeSalida = cuadroParaIngresarCoordenada("La coordenada de salida:", "Entrada de Datos", JOptionPane.QUESTION_MESSAGE);
+        coordenadaDeEntrada = cuadroParaIngresarCoordenada("La coordenada de entrada:", "Coordenada de entrada", JOptionPane.QUESTION_MESSAGE);
+        coordenadaDeSalida = cuadroParaIngresarCoordenada("La coordenada de salida:", "Coordenada de salida", JOptionPane.QUESTION_MESSAGE);
         cambiarMenu();
     }
 
-    public static Coordenada cuadroParaIngresarCoordenada(String mensaje, String titulo, int tipoDeMensaje) {
+    public Coordenada cuadroParaIngresarCoordenada(String mensaje, String titulo, int tipoDeMensaje) {
         boolean datoValido = false;
         Coordenada coordenada = null;
 
@@ -135,10 +150,14 @@ public class JuegoDeLaVida {
             } else if (ingresado.matches("\\d+,\\d+")) {
                 String[] partes = ingresado.split(",");
                 try {
-                    int x = Integer.parseInt(partes[0].trim());
-                    int y = Integer.parseInt(partes[1].trim());
-                    coordenada = new Coordenada(x, y);
+                    int filaInsertada = Integer.parseInt(partes[0].trim());
+                    int columnaInsertada = Integer.parseInt(partes[1].trim());
+                    if ((filaInsertada>=0 && filaInsertada<vista.getMenuDeInicio().getCuadriculaFX().getFilas())&&(columnaInsertada>=0 && columnaInsertada<vista.getMenuDeInicio().getCuadriculaFX().getColumnas())){
+                    coordenada = new Coordenada(filaInsertada, columnaInsertada);
                     datoValido = true;
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Las coordenadas que ingresaste estan fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Formato incorrecto. Por favor, ingresa en el formato '3,2'", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -150,11 +169,13 @@ public class JuegoDeLaVida {
     }
 
 
-
     private void cambiarMenu() {
-        if (seEstaPintando) return;
         vista.getMenuDeInicio().getContenedorMenuController().getChildren().clear();
         if (menuIniciarLaberinto) {
+            if (seEstaPintando) {
+                JOptionPane.showMessageDialog(null, "Se esta pintando el laberinto", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             vista.getMenuDeInicio().getContenedorMenuController().getChildren().add(splitPaneParaCargarLaberinto);
             menuIniciarLaberinto = false;
         } else {
