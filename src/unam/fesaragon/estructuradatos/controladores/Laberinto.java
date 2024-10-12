@@ -8,7 +8,6 @@ import javafx.util.Duration;
 import unam.fesaragon.estructuradatos.controladores.vistas.CeldaController;
 import unam.fesaragon.estructuradatos.modelos.LaberintoLogica;
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
-import unam.fesaragon.estructuradatos.modelos.adts.ADTStack;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
 import unam.fesaragon.estructuradatos.modelos.javafx.CuadriculaFX;
 import unam.fesaragon.estructuradatos.modelos.javafx.Escena;
@@ -17,9 +16,8 @@ import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 import unam.fesaragon.estructuradatos.vistas.componentes.Vista;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.Queue;
-import java.util.Stack;
+
 
 public class JuegoDeLaVida {
     private Vista vista;
@@ -36,6 +34,7 @@ public class JuegoDeLaVida {
     public JuegoDeLaVida(int filas, int columnas) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
     }
+
     public JuegoDeLaVida(int filas, int columnas, double seguntosParaPintarCadaCelda) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
         this.seguntosParaPintarCadaCelda = seguntosParaPintarCadaCelda;
@@ -45,6 +44,8 @@ public class JuegoDeLaVida {
         Escena escena = new Escena("El juego de la vida", new Stage());
         escena.cambiarEscena(vista.getMenuDeInicio().getContenedorMenuController());
         configurarBotonesDeLosMenus();
+        vista.getMenuDeInicio().getMenuController().getSplitPane().getItems().get(1).setStyle("-fx-background-color: #FFF;");
+        vista.getMenuParaCargarElLaberinto().getMenuController().getSplitPane().getItems().get(1).setStyle("-fx-background-color: #FFF;");
     }
 
     private void configurarBotonesDeLosMenus() {
@@ -89,11 +90,11 @@ public class JuegoDeLaVida {
         }
         aux.cargarParedesDeLaberinto(paredes);
         this.laberintoLogica = new LaberintoLogica(aux);
-        if (yaSePintoUnaVez){
+        if (yaSePintoUnaVez) {
             for (int fila = 0; fila < filas; fila++) {
                 for (int columna = 0; columna < columnas; columna++) {
-                    if (cuadriculaFX.getCuadriculaController().getCelda(fila,columna).getCoordenada().isEstado()){
-                    cuadriculaFX.getCuadriculaController().getCelda(fila,columna).getPanelCelda().setStyle("-fx-background-color: #FFF;");
+                    if (cuadriculaFX.getCuadriculaController().getCelda(fila, columna).getCoordenada().isEstado()) {
+                        cuadriculaFX.getCuadriculaController().getCelda(fila, columna).getPanelCelda().setStyle("-fx-background-color: #FFF;");
                     }
                 }
             }
@@ -152,10 +153,10 @@ public class JuegoDeLaVida {
                 try {
                     int filaInsertada = Integer.parseInt(partes[0].trim());
                     int columnaInsertada = Integer.parseInt(partes[1].trim());
-                    if ((filaInsertada>=0 && filaInsertada<vista.getMenuDeInicio().getCuadriculaFX().getFilas())&&(columnaInsertada>=0 && columnaInsertada<vista.getMenuDeInicio().getCuadriculaFX().getColumnas())){
-                    coordenada = new Coordenada(filaInsertada, columnaInsertada);
-                    datoValido = true;
-                    }else {
+                    if ((filaInsertada >= 0 && filaInsertada < vista.getMenuDeInicio().getCuadriculaFX().getFilas()) && (columnaInsertada >= 0 && columnaInsertada < vista.getMenuDeInicio().getCuadriculaFX().getColumnas())) {
+                        coordenada = new Coordenada(filaInsertada, columnaInsertada);
+                        datoValido = true;
+                    } else {
                         JOptionPane.showMessageDialog(null, "Las coordenadas que ingresaste estan fuera de rango", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (NumberFormatException e) {
