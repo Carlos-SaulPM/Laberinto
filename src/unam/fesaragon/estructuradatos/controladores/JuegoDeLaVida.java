@@ -2,6 +2,7 @@ package unam.fesaragon.estructuradatos.controladores;
 
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
+import unam.fesaragon.estructuradatos.controladores.vistas.CeldaController;
 import unam.fesaragon.estructuradatos.modelos.LaberintoLogica;
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
@@ -38,7 +39,13 @@ public class JuegoDeLaVida {
         vista.getMenuDeInicio().getMenuController().getBoton2().setOnAction(event -> cambiarMenu());
         vista.getMenuDeInicio().getMenuController().getBoton1().setOnAction(event -> iniciarLaberinto());
         vista.getMenuParaCargarElLaberinto().getMenuController().getBoton2().setOnAction(event -> cambiarMenu());
-        vista.getMenuParaCargarElLaberinto().getMenuController().getBoton1().setOnAction(event -> cargarLaberinto());
+        vista.getMenuParaCargarElLaberinto().getMenuController().getBoton1().setOnAction(event -> {
+            try {
+                cargarLaberinto();
+            } catch (ArchivoFXML e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void iniciarLaberinto() {
@@ -47,8 +54,8 @@ public class JuegoDeLaVida {
         System.out.println("Menu cargar laberinto: "+vista.getMenuParaCargarElLaberinto().getCuadriculaFX().hashCode());
     }
 
-    private void cargarLaberinto() {
-        CuadriculaFX copia = vista.getMenuParaCargarElLaberinto().getCuadriculaFX();
+    private void cargarLaberinto() throws ArchivoFXML {
+        CuadriculaFX copia = clonarCuadricula(vista.getMenuParaCargarElLaberinto().getCuadriculaFX());
         vista.getMenuDeInicio().setCuadriculaFX(copia);
 
         // Actualizar visualmente el contenedor
@@ -56,6 +63,7 @@ public class JuegoDeLaVida {
         vista.getMenuDeInicio().getStackPaneDeCuadriculaFX().getChildren().add(copia.getCuadriculaController().getGridPaneCuadricula());
         vista.getMenuDeInicio().getContenedorMenuController().requestLayout();
     }
+
 
 
     private void cambiarMenu() {
@@ -87,6 +95,26 @@ public class JuegoDeLaVida {
         aux.cargarParedesDeLaberinto(paredes);
         return aux;
     }
+
+    //Copia la grid del menu para cargar el laberinto para mostrarlo al menu de inicio
+    private CuadriculaFX clonarCuadricula(CuadriculaFX original) throws ArchivoFXML {
+        CuadriculaFX copia = new CuadriculaFX(original.getFilas(), original.getColumnas());
+
+        for (int fila = 0; fila < original.getFilas(); fila++) {
+            for (int columna = 0; columna < original.getColumnas(); columna++) {
+                CeldaController celdaOriginal = original.getCuadriculaController().getCelda(fila, columna);
+                Coordenada coordenadaOriginal = celdaOriginal.getCoordenada();
+                CeldaController celdaCopia = copia.getCuadriculaController().getCelda(fila, columna);
+                Coordenada coordenadaCopia = new Coordenada(coordenadaOriginal.getFila(), coordenadaOriginal.getColumna(), coordenadaOriginal.isEstado());
+                celdaCopia.setCoordenada(coordenadaCopia);
+                celdaCopia.getPanelCelda().setStyle(celdaOriginal.getPanelCelda().getStyle());
+            }
+        }
+        return copia;
+    }
+
+
+
 
     public LaberintoLogica getLaberintoLogica() {
         return laberintoLogica;

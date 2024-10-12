@@ -82,10 +82,12 @@ public class CuadriculaFX{
                 GridPane.setHgrow(panelCelda, Priority.ALWAYS);
                 GridPane.setVgrow(panelCelda, Priority.ALWAYS);
                 celdaController.setCoordenada(new Coordenada(fila,columna));
+                panelCelda.setUserData(celdaController); // Guardar el CeldaController como userData
                 cuadriculaController.getGridPaneCuadricula().add(panelCelda, columna, fila);
             }
         }
     }
+
 
     private ColaADT<CeldaController> colaDeCeldas() throws ArchivoFXML {
         ColaADT<CeldaController> celdas = new ColaADT<>();
@@ -104,33 +106,6 @@ public class CuadriculaFX{
         return celdas;
     }
 
-//    public CuadriculaFX copiarCuadricula() throws ArchivoFXML {
-//        CuadriculaFX copiaCuadricula = new CuadriculaFX(this.getFilas(), this.getColumnas(), this.habilitarTouchDeceldas);
-//
-//        // Iterar sobre cada celda de la cuadricula original
-//        for (int fila = 0; fila < this.getFilas(); fila++) {
-//            for (int columna = 0; columna < this.getColumnas(); columna++) {
-//                // Obtener la celda original y su coordenada
-//                CeldaController celdaOriginal = this.getCuadriculaController().getCelda(fila, columna);
-//                Coordenada coordenadaOriginal = celdaOriginal.getCoordenada();
-//
-//                // Crear una nueva celda para la copia
-//                CeldaController celdaCopia = copiaCuadricula.getCuadriculaController().getCelda(fila, columna);
-//
-//                // Copiar el estado de la coordenada
-//                Coordenada coordenadaCopia = new Coordenada(coordenadaOriginal.getFila(), coordenadaOriginal.getColumna());
-//                coordenadaCopia.setEstado(coordenadaOriginal.getEstado());
-//
-//                // Asignar la coordenada copiada a la nueva celda
-//                celdaCopia.setCoordenada(coordenadaCopia);
-//
-//                // Copiar otras propiedades de la celda si es necesario (como color, etc.)
-//            }
-//        }
-//
-//        return copiaCuadricula;
-//    }
-
     //GETTERS Y SETTERS
     public int getFilas() {
         return filas;
@@ -144,6 +119,7 @@ public class CuadriculaFX{
         return cuadriculaController;
     }
 
-
-
+    public boolean isHabilitarTouchDeceldas() {
+        return habilitarTouchDeceldas;
+    }
 }
