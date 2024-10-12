@@ -1,10 +1,16 @@
 package unam.fesaragon.estructuradatos.controladores;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import unam.fesaragon.estructuradatos.controladores.vistas.CeldaController;
+import unam.fesaragon.estructuradatos.controladores.vistas.CuadriculaController;
 import unam.fesaragon.estructuradatos.modelos.LaberintoLogica;
 import unam.fesaragon.estructuradatos.modelos.adts.ADTArray2D;
+import unam.fesaragon.estructuradatos.modelos.adts.ADTStack;
 import unam.fesaragon.estructuradatos.modelos.excepciones.ArchivoFXML;
 
 import unam.fesaragon.estructuradatos.modelos.javafx.CuadriculaFX;
@@ -12,6 +18,10 @@ import unam.fesaragon.estructuradatos.modelos.javafx.Escena;
 import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 import unam.fesaragon.estructuradatos.modelos.laberinto.GridLaberinto;
 import unam.fesaragon.estructuradatos.vistas.componentes.Vista;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class JuegoDeLaVida {
     Vista vista;
@@ -23,8 +33,6 @@ public class JuegoDeLaVida {
 
     public JuegoDeLaVida(int filas, int columnas) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
-        GridLaberinto gridLaberinto = probandoLogica(filas, columnas);
-        this.laberintoLogica = new LaberintoLogica(gridLaberinto);
     }
 
     public void comenzar() {
@@ -49,8 +57,57 @@ public class JuegoDeLaVida {
     }
 
     private void iniciarLaberinto() {
+        CuadriculaFX cuadriculaFX = vista.getMenuDeInicio().getCuadriculaFX();
+        int filas = cuadriculaFX.getFilas();
+        int columnas = cuadriculaFX.getColumnas();
+        GridLaberinto aux = new GridLaberinto(filas, columnas);
+        aux.cargarCoordenadaDeEntradaYSalida(new Coordenada(0, 0), new Coordenada(9, 9));
+        ADTArray2D<Coordenada> paredes = new ADTArray2D<>(Coordenada.class, filas, columnas);
+        //Obtener el GridLaberinto para pasarlo a la logica.
+        for (int fila = 0; fila < filas; fila++) {
+            for (int columna = 0; columna < columnas; columna++) {
+                //Negando la condicion Obtengo solo las paredes
+                paredes.set_item(fila, columna, cuadriculaFX.getCuadriculaController().getCelda(fila, columna).getCoordenada());
 
+            }
+        }
+        aux.cargarParedesDeLaberinto(paredes);
+        this.laberintoLogica = new LaberintoLogica(aux);
+        laberintoLogica.getCamino().imprimirStack();
+        pintarCamino();
     }
+
+    private void pintarCamino() {
+        // Invertir la pila
+        Stack<Coordenada> caminoPilaInvertida = invertirStack(laberintoLogica.getCamino());
+
+        // Convertir la pila invertida a una cola
+        Queue<Coordenada> caminoCola = new LinkedList<>();
+        while (!caminoPilaInvertida.isEmpty()) {
+            caminoCola.add(caminoPilaInvertida.pop());
+        }
+
+        // Usar la cola para pintar las celdas
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (!caminoCola.isEmpty()) {
+                Coordenada coordenadaCamino = caminoCola.poll();
+                vista.getMenuDeInicio().getCuadriculaFX().getCuadriculaController().getCelda(coordenadaCamino.getFila(), coordenadaCamino.getColumna()).getPanelCelda().setStyle("-fx-background-color: " + "#92c943" + ";");
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    private Stack<Coordenada> invertirStack(ADTStack<Coordenada> original) {
+        Stack<Coordenada> invertido = new Stack<>();
+        while (!original.isEmpty()) {
+            invertido.push(original.pop());
+        }
+        return invertido;
+    }
+
+
+
 
     private void cargarLaberinto() throws ArchivoFXML {
         CuadriculaFX copia = clonarCuadricula(vista.getMenuParaCargarElLaberinto().getCuadriculaFX());
@@ -62,8 +119,6 @@ public class JuegoDeLaVida {
         vista.getMenuDeInicio().getContenedorMenuController().requestLayout();
     }
 
-
-
     private void cambiarMenu() {
         vista.getMenuDeInicio().getContenedorMenuController().getChildren().clear();
         if (menuIniciarLaberinto) {
@@ -73,24 +128,6 @@ public class JuegoDeLaVida {
             vista.getMenuDeInicio().getContenedorMenuController().getChildren().add(splitPaneMenuInicio);
             menuIniciarLaberinto = true;
         }
-    }
-
-    private GridLaberinto probandoLogica(int filas, int columnas) {
-        GridLaberinto aux = new GridLaberinto(filas, columnas);
-        aux.cargarCoordenadaDeEntradaYSalida(new Coordenada(4, 0), new Coordenada(0, 4));
-        ADTArray2D<Coordenada> paredes = new ADTArray2D<>(Coordenada.class, filas, columnas);
-        for (int fila = 0; fila < filas; fila++) {
-            for (int columna = 0; columna < columnas; columna++) {
-                if (fila >= 1 && columna >= 1) {
-                    paredes.set_item(fila, columna, new Coordenada(fila, columna, false));
-                } else {
-                    paredes.set_item(fila, columna, new Coordenada(fila, columna));
-
-                }
-            }
-        }
-        aux.cargarParedesDeLaberinto(paredes);
-        return aux;
     }
 
     //Copia la grid del menu para cargar el laberinto para mostrarlo al menu de inicio
@@ -109,8 +146,6 @@ public class JuegoDeLaVida {
         }
         return copia;
     }
-
-
 
 
     public LaberintoLogica getLaberintoLogica() {
