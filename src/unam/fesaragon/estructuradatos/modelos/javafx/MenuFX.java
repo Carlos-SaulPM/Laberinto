@@ -24,9 +24,10 @@ public class MenuFX {
         cargarComponentes();
         ingresarCuadriculaFXAlMenu();
     }
+
     /**
      * @param esMenuParaCargarElLaberinto Si el valor es true, se configura para ser un menu para cargar el laberinto
-     * */
+     */
     public MenuFX(int filas, int columnas, boolean esMenuParaCargarElLaberinto) throws ArchivoFXML {
         this.cuadriculaFX = new CuadriculaFX(filas, columnas, esMenuParaCargarElLaberinto);
         cargarComponentes();
@@ -35,13 +36,13 @@ public class MenuFX {
     }
 
     private void configurarMenuFXParaCargarLaberinto() {
-        getMenuController().getTextTitulo1().setText("Confirmar Laberinto");
-        getMenuController().getTextTitulo2().setText("Regresar");
+        getMenuController().getTextTitulo1().setText("Cargar Laberinto");
+        getMenuController().getTextTitulo2().setText("Regresar al Menu");
     }
 
     private void ingresarCuadriculaFXAlMenu() {
         stackPaneDeCuadriculaFX = new StackPane();
-        stackPaneDeCuadriculaFX.setStyle("-fx-background-color: #ADD8E6;");
+        stackPaneDeCuadriculaFX.setStyle("-fx-background-color: #93C7C1;");
         stackPaneDeCuadriculaFX.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // Añádiendo el GridPane al StackPane
         stackPaneDeCuadriculaFX.getChildren().add(cuadriculaFX.getCuadriculaController().getGridPaneCuadricula());
@@ -66,7 +67,6 @@ public class MenuFX {
         }
         menuController = loaderCuadricula.getController();
     }
-
 
 
     public MenuController getMenuController() {

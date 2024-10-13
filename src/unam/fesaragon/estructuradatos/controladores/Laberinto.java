@@ -19,7 +19,7 @@ import javax.swing.*;
 import java.util.Queue;
 
 
-public class JuegoDeLaVida {
+public class Laberinto {
     private Vista vista;
     private LaberintoLogica laberintoLogica;
     private SplitPane splitPaneMenuInicio;
@@ -31,11 +31,11 @@ public class JuegoDeLaVida {
     private boolean yaSePintoUnaVez = false;
     private double seguntosParaPintarCadaCelda = 0.1;
 
-    public JuegoDeLaVida(int filas, int columnas) throws ArchivoFXML {
+    public Laberinto(int filas, int columnas) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
     }
 
-    public JuegoDeLaVida(int filas, int columnas, double seguntosParaPintarCadaCelda) throws ArchivoFXML {
+    public Laberinto(int filas, int columnas, double seguntosParaPintarCadaCelda) throws ArchivoFXML {
         this.vista = new Vista(filas, columnas);
         this.seguntosParaPintarCadaCelda = seguntosParaPintarCadaCelda;
     }

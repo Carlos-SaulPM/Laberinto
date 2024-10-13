@@ -16,11 +16,11 @@ public class Coordenada {
     public Coordenada(int fila, int columna) {
         this.fila = fila;
         this.columna = columna;
-        this.estado=true;
+        this.estado = true;
     }
 
     public Coordenada() {
-        this.estado=true;
+        this.estado = true;
     }
 
     public int getFila() {
@@ -55,6 +55,7 @@ public class Coordenada {
                 ", estado=" + estado +
                 ']';
     }
+
     @Override
 
     public boolean equals(Object o) {

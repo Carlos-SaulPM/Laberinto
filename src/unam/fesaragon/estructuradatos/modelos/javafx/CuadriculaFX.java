@@ -10,7 +10,7 @@ import unam.fesaragon.estructuradatos.modelos.laberinto.Coordenada;
 
 import java.io.IOException;
 
-public class CuadriculaFX{
+public class CuadriculaFX {
     //Componentes de la cuadricula
     private CuadriculaController cuadriculaController;
     private boolean habilitarTouchDeceldas = false;
@@ -24,6 +24,7 @@ public class CuadriculaFX{
         this.columnas = columnas;
         cargarComponentes();
     }
+
     public CuadriculaFX(int filas, int columnas, boolean habilitarTouchDeCeldas) throws ArchivoFXML {
         this.filas = filas;
         this.columnas = columnas;
@@ -81,7 +82,7 @@ public class CuadriculaFX{
                 panelCelda.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 GridPane.setHgrow(panelCelda, Priority.ALWAYS);
                 GridPane.setVgrow(panelCelda, Priority.ALWAYS);
-                celdaController.setCoordenada(new Coordenada(fila,columna));
+                celdaController.setCoordenada(new Coordenada(fila, columna));
                 panelCelda.setUserData(celdaController); // Guardar el CeldaController como userData
                 cuadriculaController.getGridPaneCuadricula().add(panelCelda, columna, fila);
             }
